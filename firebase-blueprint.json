@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "simulation": {
+      "title": "Simulation Run",
+      "description": "A saved takeoff simulation run with core aero control inputs and outcome",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique user ID of the authenticated pilot"
+        },
+        "username": {
+          "type": "string",
+          "description": "The callsign of the pilot"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server or calendar timestamp of simulation"
+        },
+        "aircraftName": {
+          "type": "string",
+          "description": "The selected active preset airframe"
+        },
+        "success": {
+          "type": "boolean",
+          "description": "Flag representing whether takeoff was accomplished before runway overrun"
+        },
+        "liftoffDistance": {
+          "type": "number",
+          "description": "The runway coordinate of liftoff in meters"
+        },
+        "liftoffTime": {
+          "type": "number",
+          "description": "The runway time of liftoff in seconds"
+        },
+        "finalDistance": {
+          "type": "number",
+          "description": "The exact maximum runway distance covered in meters"
+        },
+        "finalVelocity": {
+          "type": "number",
+          "description": "The exact maximum speed attained in meters per second"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Detailed validation text or overrun warning description"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Detailed physics sliders parameters"
+        }
+      },
+      "required": [
+        "userId",
+        "username",
+        "timestamp",
+        "aircraftName",
+        "success",
+        "finalDistance",
+        "finalVelocity",
+        "reason",
+        "parameters"
+      ]
+    }
+  },
+  "firestore": {
+    "simulations/{simulationId}": {
+      "schema": "simulation",
+      "description": "Takeoff simulation records"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Simulations Collection: Users can only create, read, and delete their own flight simulations
+    match /simulations/{simulationId} {
+      // Allow creation if logged in and setting userId to their authenticated UID
+      allow create: if request.auth != null 
+                    && request.resource.data.userId == request.auth.uid;
+
+      // Allow reading and deleting if logged in and owning the record
+      allow read, delete: if request.auth != null 
+                          && resource.data.userId == request.auth.uid;
+
+      // Flight records are immutable logs of real-world physical simulations; no updating
+      allow update: if false;
+    }
+
+    // Generic Rules for any other collection: Users can only read and write their own documents
+    match /{collectionName}/{docId} {
+      allow read: if request.auth != null && (
+        docId == request.auth.uid ||
+        (resource != null && resource.data.userId == request.auth.uid)
+      );
+      
+      allow write: if request.auth != null && (
+        docId == request.auth.uid ||
+        (request.resource != null && request.resource.data.userId == request.auth.uid) ||
+        (resource != null && resource.data.userId == request.auth.uid)
+      );
+    }
+  }
+}

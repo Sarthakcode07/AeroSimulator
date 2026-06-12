@@ -1,0 +1,8 @@
+{
+  "name": "Aero Lift & Drag Simulator",
+  "description": "An interactive aerodynamic simulator to calculate and visualize aircraft lift, drag, and takeoff performance, coupled with a server-side Gemini Aerospace Expert.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
